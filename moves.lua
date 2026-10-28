@@ -1,7 +1,7 @@
 -- init for the tables
 zoomdb = {}
 dashbarids = {}
---- stuff for araox so dashing is legal
+--- stuff for aratox so dashing is legal
 backup_checks = aratox_checks
 fakeup_checks = {}
 ---- build fakeup_checks
@@ -55,15 +55,15 @@ core.register_globalstep(function(dtime)
 	if zoomdb[playername] < 0.9 then
     aratox_checks = fakeup_checks
 		if dsb then
-	player:hud_set_hotbar_image("mcla_inventory_hotbar_cd.png^[transformR90^[lowpart:".. zoomdb[playername] * 50 ..":mcla_inventory_hotbar_cd_y.png\\^[transformR90^[transformR270")
+	player:hud_set_hotbar_image("mcla_inventory_hotbar_cd.png^[lowpart:"..zoomdb[playername] * 50 ..":mcla_inventory_hotbar_cd_y.png^[transformR270")
 	else
-		player:hud_change(dashbarids[playername], "text", "alphaver_dashbar_bg.png^[transformR90^[lowpart:".. zoomdb[playername] * 50 ..":alphaver_dashbar_y.png\\^[transformR90^[transformR270")
+		player:hud_change(dashbarids[playername], "text", "alphaver_dashbar_bg.png^[lowpart:"..zoomdb[playername] * 50 ..":alphaver_dashbar_y.png^[transformR270")
 		end
 	elseif zoomdb[playername] < 2 then
 		if dsb then
-	player:hud_set_hotbar_image("mcla_inventory_hotbar_cd.png^[transformR90^[lowpart:".. zoomdb[playername] * 50 ..":mcla_inventory_hotbar_cd_b.png\\^[transformR90^[transformR270")
+	player:hud_set_hotbar_image("mcla_inventory_hotbar_cd.png^[lowpart:"..zoomdb[playername] * 50 ..":mcla_inventory_hotbar_cd_b.png^[transformR270")
 	else
-		player:hud_change(dashbarids[playername], "text", "alphaver_dashbar_bg.png^[transformR90^[lowpart:".. zoomdb[playername] * 50 ..":alphaver_dashbar_b.png\\^[transformR90^[transformR270")
+		player:hud_change(dashbarids[playername], "text", "alphaver_dashbar_bg.png^[lowpart:"..zoomdb[playername] * 50 ..":alphaver_dashbar_b.png^[transformR270")
 		end
 	else
 		player:hud_set_hotbar_image("mcla_inventory_hotbar.png")
