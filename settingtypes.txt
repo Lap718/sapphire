@@ -1,0 +1,30 @@
+# Will be used as the version string shown in the top 
+# left. You may optionally use the following placeholders:
+# @name, @name_lower, @name_upper @id
+sp_versionum (Version number) string BackToAlpha a1.0.16_05 Sapphire
+
+[Tweaks]
+# Whether to use the top texture for firewood or not.
+sp_firewood (Firewood top texture) bool false
+# Choose the accent color for the wooden work bench.
+sp_workbench (Wooden Workbench Accent Color) enum blue blue,brown
+
+# Enable recipe to craft colored glass with glass and dye.
+# Useful for pre-existing worlds.
+sp_dyed_glass (Dyed Glass) bool true
+
+# Make planting grass on tilled fields change the grass 
+# into wheat. Useful if you don't want to wait for seeds
+# to pop out of the soil.
+sp_plant_grass (Wheat Grass) bool false
+
+# Adds saplings for the new woodtypes
+sp_saplings (Saplings) bool true
+
+# Allows for grass paths to be crafted with tall
+# grass, dirt, and wool. Useful for pre-existing worlds.
+sp_craft_paths (Craftable Grass Paths) bool false
+
+# Whether the dash bar should be inside the hotbar. If not,
+# make a separate UI element for it.
+sp_dashotbar (Use Hotbar as Dashbar) bool false
