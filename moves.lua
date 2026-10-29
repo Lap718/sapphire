@@ -2,7 +2,6 @@
 zoomdb = {}
 dashbarids = {}
 --- stuff for aratox so dashing is legal
-backup_checks = aratox_checks
 fakeup_checks = {}
 ---- build fakeup_checks
 local fake_checks = {"fly_1", "fly_2", "speed_1"}
@@ -71,7 +70,10 @@ core.register_globalstep(function(dtime)
 			object = player, max_hear_distance = 40
 		}, true)
 		player:set_physics_override({speed = 1})
-    aratox_checks = backup_checks
+    aratox_checks = nil
+    if core.get_modpath("aratox") then
+      dofile(core.get_modpath("aratox") .."/init.lua")
+    end
 		if not dsb then
 		player:hud_change(dashbarids[playername], "text", "blank.png")
 		end

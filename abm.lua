@@ -1,9 +1,19 @@
--- recruiter placement
+-- recruiter stuff
 core.register_abm({
 	label = "recruiter vanishing",
 	nodenames = "alphaver:recruit",
 	interval = 5.0,
 	chance = 2,
+	action = function(pos)
+		core.set_node(pos, {name = "air"})
+	end
+})
+core.register_abm({
+	label = "recruiter dying",
+	nodenames = "alphaver:recruit",
+  neighbors = {"minecraft:tnt", "minecraft:torch", "minecraft:torch_wall"},
+	interval = 1.0,
+	chance = 1,
 	action = function(pos)
 		core.set_node(pos, {name = "air"})
 	end
