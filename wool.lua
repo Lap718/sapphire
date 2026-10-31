@@ -5,7 +5,7 @@
 for num, name in ipairs(colours) 
 do
 minetest.register_node(":minecraft:wool_" .. name:lower(), {
-	description = name .." Wool",
+	description = S(name .." Wool"),
 	tiles = {
 		terrain(164 + num)
 	},

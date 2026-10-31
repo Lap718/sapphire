@@ -3,6 +3,7 @@ colours = {"Pink", "Blue", "Green", "Black"}
 tools = {"Sword", "Shovel", "Pick", "Axe", "Hoe"}
 flowers = core.settings:get("sp_flowers")
 toolGroups = {"fleshy", "crumbly", "cracky", "choppy", "oddly_breakable_by_hand"}
+S = core.get_translator("sapphire")
 dofile(path .. "functions.lua")
 dofile(path .. "quads.lua")
 dofile(path .. "dyes.lua")
@@ -22,6 +23,7 @@ flowers = nil
 tools = nil
 toolGroups = nil
 add = nil
+S = nil
 
 -- TODO:
 --v add more biomes

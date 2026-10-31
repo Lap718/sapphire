@@ -2,6 +2,7 @@
 add.override("minecraft:bedrock", "tiles", {
 	terrain(17), terrain(149), terrain(17)
 })
+add.override("minecraft:bedrock", "description", S("Bedrock"))
 -- make doors
 --- hallway doors
 local ns = { "n", "s" }
@@ -17,6 +18,7 @@ do
 		do
 			local nodename = "hub:hallway_"..nletter.."_"..hname:lower()
 			add.glass(nodename, "Hub Door (Hallway "..hname..")", {terrain( (16 * (4 + hnum)) + 2 )})
+			add.override(nodename, "description", S("Hub Door") .." ("..S("Hallway")..")")
 			add.unbreaking(nodename)
 		end
 	end

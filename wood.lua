@@ -1,4 +1,4 @@
-add.woodtype("alphaver:fire", "Firewood", terrain(182), terrain(182), terrain(183), terrain(184), terrain(185), path.."/schematics/firetree.mts")
+add.woodtype("alphaver:fire", "Flamewood", terrain(182), terrain(182), terrain(183), terrain(184), terrain(185), path.."/schematics/firetree.mts")
 if core.settings:get_bool("sp_firewood", false) == true then
     core.override_item("alphaver:firewood", {
         tiles = {terrain(199), terrain(199), terrain(182)}
@@ -15,15 +15,13 @@ core.register_decoration({
     biomes = {"grasslands", "beach", "sea"}
 })
 if core.settings:get_bool("sp_workbench", true) == false then
-    core.override_item("minecraft:crafting_table", {
-        description = "Wooden Workbench",
-        tiles = {
+    add.override("minecraft:crafting_table", "tiles", {
             "workbench_top_brown.png",
              terrain(4),
             "workbench_side_brown.png",
             "workbench_front_brown.png",
             "workbench_side_brown.png",
             "workbench_front_brown.png"
-        }
     })
+    add.override("minecraft:crafting_table", "description", S("Wooden Workbench"))
 end

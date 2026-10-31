@@ -9,7 +9,7 @@ add.plant("alphaver:waterlily", "Waterlily", terrain(171), 1)
 add.glow("alphaver:waterlily", 15)
 add.plant("alphaver:bush", "Tallgrass", terrain(111))
 ---- burning burger
-add.item("minecraft:flame", "Burning Burger", terrain(172) .."^[transformR90")
+add.item("minecraft:flame", "Edible Fire", terrain(172) .."^[transformR90")
 
 ---- sp_plant_grass logic
 if core.settings:get_bool("sp_plant_grass") then

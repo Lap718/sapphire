@@ -51,7 +51,7 @@ add[material] = function(name, description, tiles)
 local groups = {}
 groups[group] = 2
 core.register_node(":"..name, {
-	description = description,
+	description = S(description),
 	sounds = block_sound(material),
 	groups = groups,
 	tiles = tiles
@@ -131,7 +131,7 @@ add.group(name, "oddly_breakable_by_hand")
 end
 add.item = function(name, description, invimage)
 core.register_craftitem(":"..name, {})
-add.override(name, "description", description)
+add.override(name, "description", S(description))
 add.invimage(name, invimage)
 end
 add.plant = function(name, description, tile, waving)
@@ -161,7 +161,8 @@ core.register_craft({
 })
 end
 add.stairs = function(name, description, tiles, material, full)
-add[material](name.."_slab", description.." Slab", tiles)
+	local desc = core.translate("sapphire", description)
+add[material](name.."_slab", S("@1 Slab", desc), tiles)
 add.nodebox(name.."_slab", {
 	type = "fixed", fixed = {
 		{
@@ -172,7 +173,7 @@ add.nodebox(name.."_slab", {
 add.override(name.."_slab", "on_construct", function(pos)
 	connect_slab(pos, name.."_slab", full)
 	end)
-add[material](name.."_stair", description.." Stair", tiles)
+add[material](name.."_stair", S("@1 Stairs", desc), tiles)
 add.rotate(name.."_stair", "facedir")
 add.nodebox(name.."_stair", {
 	type = "fixed", fixed = {
@@ -200,7 +201,7 @@ core.register_ore({
 end
 add.door = function(name, description, sheet, invimage, base, material)
 doors.register(name, {
-	description = description,
+	description = S(description),
 	tiles = {{
 		name = sheet, backface_culling = true
 	}},
@@ -222,15 +223,15 @@ doors.register(name, {
 })
 end
 add.woodtype = function(name, description, bark, treetop, fancy, simple, planks, schema)
-add.plant(name.."wood_sapling", description.." Sapling", "sapling_"..description:lower()..".png", 1)
-add.wood(name.."wood", description.." Log", {
+add.plant(name.."wood_sapling", S("@1 Sapling", description), "sapling_"..description:lower()..".png", 1)
+add.wood(name.."wood", S("@1 Log", description), {
 	treetop, treetop, bark
 })
-add.leaves(name.."leaves", description.." Leaves", fancy, simple)
-add.wood(name.."planks", description.." Planks", {
+add.leaves(name.."leaves", S("@1 Leaves", description), fancy, simple)
+add.wood(name.."planks", S("@1 Planks", description), {
 	planks
 })
-add.stairs(name.."plank", description.." Plank", {
+add.stairs(name.."plank", description, {
 	planks
 }, "wood", name.."planks")
 add.exchange(name.."wood", name.."planks 4")

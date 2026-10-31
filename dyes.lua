@@ -1,15 +1,13 @@
 -- make the dyes
 for num, name in ipairs(colours)
 do
-    core.register_craftitem(":dyes:dye_" .. name:lower(), {
-        description = name .. " Dye",
-        inventory_image = item(55) .. "^[colorizehsl:0:0^[makealpha:0,0,0^[colorize:".. name:lower() ..":128^[contrast:64"
-        })
+    add.item("dyes:dye_" .. name:lower(), " Dye", item(55) .. "^[colorizehsl:0:0^[makealpha:0,0,0^[colorize:".. name:lower() ..":128^[contrast:64")
+    add.override("dyes:dye_"..name:lower(), "description", S(name) ..S(" Dye"))
 end
 
 -- add green stone
 core.register_item(":minecraft:greenstone", {
-    description = "Greenstone",
+    description = S("Greenstone"),
     sounds = block_sound("sand"),
     tiles = {
     "(" .. terrain(101) .. ")^[transformR90",
@@ -26,7 +24,7 @@ core.register_item(":minecraft:greenstone", {
     drawtype = "raillike",
     inventory_image = item(40) .."^[colorize:green:128^[contrast:64",
     wield_image = item(55).."^[colorize:green:128^[contrast:64",
-    _tt_help = "this is a conductive material"
+    _tt_help = S("this is a conductive material")
 })
 add.ore("minecraft:greenstone", "Greenstone Ore", {terrain(51)}, "minecraft:stone", 30)
 add.glow("minecraft:greenstone_ore", 5)

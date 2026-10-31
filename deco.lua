@@ -7,14 +7,8 @@ add.wood("minecraft:bookshelf_empty", "Shelf", {terrain(4), terrain(4), terrain(
 add.snow("minecraft:df_yellow", "Yellow Dimension Tile", {terrain(152)})
 add.plant("minecraft:dbg2", "DEBUG (2D)", terrain(150))
 add.glow("minecraft:dbg2", 15)
-core.register_craftitem(":minecraft:paper", {
-    description = "Paper",
-    inventory_image = "bloood_nature.png^[colorizehsl:0:0^[makealpha:0,0,0^[brighten"
-})
-core.register_craftitem(":minecraft:book", {
-    description = "Book",
-    inventory_image = alphacutout("mobs_fallback.png^strip.png", item(23))
-})
+add.item("minecraft:paper", "Paper", "bloood_nature.png^[colorizehsl:0:0^[makealpha:0,0,0^[brighten")
+add.item("minecraft:book", "Book", alphacutout("mobs_fallback.png^strip.png", item(23)))
 add.stone("alphaver:recruit", "Recruiter", {terrain(17) .. "^[multiply:black"})
 add.nodebox("alphaver:recruit", { 	type = "fixed", 	fixed = { 		{-0.06250, -0.4375, -0.06250, 0.06250, 1.438, 0.06250} 	} })
 add.mesh("alphaver:recruit", "alphaver_recruit.obj")
