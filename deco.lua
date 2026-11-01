@@ -9,6 +9,7 @@ add.plant("minecraft:dbg2", "DEBUG (2D)", terrain(150))
 add.glow("minecraft:dbg2", 15)
 add.item("minecraft:paper", "Paper", "bloood_nature.png^[colorizehsl:0:0^[makealpha:0,0,0^[brighten")
 add.item("minecraft:book", "Book", alphacutout("mobs_fallback.png^strip.png", item(23)))
+add.wood("minecraft:pillar", "Pillar (Wooden)", {terrain(144)})
 add.stone("alphaver:recruit", "Recruiter", {terrain(17) .. "^[multiply:black"})
 add.nodebox("alphaver:recruit", { 	type = "fixed", 	fixed = { 		{-0.06250, -0.4375, -0.06250, 0.06250, 1.438, 0.06250} 	} })
 add.mesh("alphaver:recruit", "alphaver_recruit.obj")
@@ -34,57 +35,45 @@ core.register_craft({
         {"minecraft:df_blue", "minecraft:df_yellow"}
     }
 })
+local recipes = {
+	df = {
+		{"minecraft:df_yellow", "minecraft:df_blue"},
+		{"minecraft:df_blue", "minecraft:df_yellow"},
+	},
+	["df 1"] = {
+		{"minecraft:df_blue", "minecraft:df_yellow"},
+		{"minecraft:df_yellow", "minecraft:df_blue"},
+	},
+	bookshelf_empty = {
+		{"minecraft:plank", "minecraft:stick", "minecraft:plank"},
+		{"", "minecraft:stick", ""},
+		{"minecraft:plank", "minecraft:stick", "minecraft:plank"}
+	},
+	bookshelf = {
+		{"minecraft:book", "minecraft:book", "minecraft:book"},
+		{"", "minecraft:bookshelf_empty", ""},
+		{"minecraft:book", "minecraft:book", "minecraft:book"}
+	},
+	["paper 3"] = {
+		{"minecraft:papyrus", "minecraft:papyrus", "minecraft:papyrus"}
+	},
+	book = {
+		{"minecraft:paper", "minecraft:paper"},
+		{"minecraft:paper", "mobs:leather"}
+	},
+	
+}
 if core.settings:get_bool("sp_craft_paths", false) == true then
+	recipes["path"] = {
+		{"minecraft:wool"},
+		{"alphaver:bush"},
+		{"minecraft:dirt"}
+	}
+end
+for output, recipe in pairs(recipes)
+do
 	core.register_craft({
-  	  output = "minecraft:path 4",
-    	recipe = {
-     	   {"minecraft:wool"},
-     	   {"alphaver:bush"},
-     	   {"minecraft:dirt"}
-    	}
+		output = "minecraft:"..output,
+		recipe = recipe
 	})
 end
-core.register_craft({
-    output = "minecraft:bookshelf_empty",
-    recipe = {
-        {"minecraft:plank", "minecraft:stick", "minecraft:plank"},
-        {"", "minecraft:stick", ""},
-        {"minecraft:plank", "minecraft:stick", "minecraft:plank"}
-    }
-})
-core.register_craft({
-    output = "minecraft:bookshelf",
-    recipe = {
-        {"minecraft:book", "minecraft:book", "minecraft:book"},
-        {"", "minecraft:bookshelf_empty", ""},
-        {"minecraft:book", "minecraft:book", "minecraft:book"}
-    }
-})
-core.register_craft({
-    output = "minecraft:paper 3",
-    recipe = {
-        {"minecraft:papyrus", "minecraft:papyrus", "minecraft:papyrus"}
-    }
-})
-core.register_craft({
-    output = "minecraft:book",
-    recipe = {
-        {"minecraft:paper", "minecraft:paper"},
-        {"minecraft:paper", "mobs:leather"}
-    }
-})
-core.register_craft({
-    output = "minecraft:df",
-    recipe = {
-        {"minecraft:df_yellow", "minecraft:df_blue"},
-        {"minecraft:df_blue", "minecraft:df_yellow"}
-    }
-})
-core.register_craft({
-    output = "minecraft:df",
-    recipe = {
-        {"minecraft:df_blue", "minecraft:df_yellow"},
-        {"minecraft:df_yellow", "minecraft:df_blue"}
-    }
-})
-
