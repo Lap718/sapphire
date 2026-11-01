@@ -28,17 +28,15 @@ for num, name in ipairs(unbreaking)
 do
 	add.unbreaking(name)
 end
-core.register_craft({
-    output = "minecraft:df",
-    recipe = {
-        {"minecraft:df_yellow", "minecraft:df_blue"},
-        {"minecraft:df_blue", "minecraft:df_yellow"}
-    }
-})
 local recipes = {
 	df = {
 		{"minecraft:df_yellow", "minecraft:df_blue"},
 		{"minecraft:df_blue", "minecraft:df_yellow"},
+	},
+	pillar = {
+		{"minecraft:plank", "minecraft:stick", "minecraft:plank"},
+		{"minecraft:stick", "", "minecraft:stick"},
+		{"minecraft:plank", "minecraft:stick", "minecraft:plank"}
 	},
 	["df 1"] = {
 		{"minecraft:df_blue", "minecraft:df_yellow"},
