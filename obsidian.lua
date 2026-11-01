@@ -1,4 +1,4 @@
-add.item(":minecraft:obsidian_ingot", "Obsidian Ingot", item(23) .."^[multiply:purple")
+add.item("minecraft:obsidian_ingot", "Obsidian Ingot", item(23) .."^[multiply:purple")
 core.register_craft({
     type = "cooking",
     output = "minecraft:obsidian_ingot 9",
