@@ -1,4 +1,4 @@
-add.woodtype("alphaver:fire", "Flamewood", terrain(182), terrain(182), terrain(183), terrain(184), terrain(185), path.."/schematics/firetree.mts")
+add.woodtype("alphaver:fire", "Flamewood", terrain(182), terrain(182), terrain(183), terrain(184), terrain(185), terrain(252), path.."/schematics/firetree.mts")
 if core.settings:get_bool("sp_firewood", false) == true then
     core.override_item("alphaver:firewood", {
         tiles = {terrain(199), terrain(199), terrain(182)}

@@ -161,7 +161,7 @@ core.register_craft({
 })
 end
 add.stairs = function(name, description, tiles, material, full)
-	local desc = core.translate("sapphire", description)
+local desc = core.translate("sapphire", description)
 add[material](name.."_slab", S("@1 Slab", desc), tiles)
 add.nodebox(name.."_slab", {
 	type = "fixed", fixed = {
@@ -222,10 +222,14 @@ doors.register(name, {
 	}
 })
 end
-add.woodtype = function(name, description, bark, treetop, fancy, simple, planks, schema)
+add.woodtype = function(name, description, bark, treetop, fancy, simple, planks, pillar, schema, stick)
+	local stick = stick or "minecraft:stick"
 add.plant(name.."wood_sapling", S("@1 Sapling", description), "sapling_"..description:lower()..".png", 1)
 add.wood(name.."wood", S("@1 Log", description), {
 	treetop, treetop, bark
+})
+add.wood(name.."pillar", S("Pillar (@1)", description), {
+	pillar
 })
 add.leaves(name.."leaves", S("@1 Leaves", description), fancy, simple)
 add.wood(name.."planks", S("@1 Planks", description), {
@@ -235,8 +239,23 @@ add.stairs(name.."plank", description, {
 	planks
 }, "wood", name.."planks")
 add.exchange(name.."wood", name.."planks 4")
+core.register_craft({
+	output = stick.." 4",
+	recipe = {
+		{name.."wood"},
+		{name.."wood"}
+	}
+})
+core.register_craft({
+	output = name.."pillar",
+	recipe = {
+		{name.."planks", stick, name.."planks"},
+		{stick, "", stick},
+		{name.."planks", stick, name.."planks"}
+	}
+})
 if core.settings:get_bool("sp_saplings", true) == true then
-add.drop(name.."leaves", name.."wood_sapling")
+add.exchange(name.."leaves", name.."wood_sapling")
 core.register_abm({
 	label = description:lower() .." sapling growing",
 	nodenames = name.."wood_sapling",
