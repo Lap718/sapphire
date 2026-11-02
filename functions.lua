@@ -1,13 +1,11 @@
 -- functions for certain atlases
-function upper(id)
-return atlas_id("terrain", id)
+upper = terrain
+function lower(id)
+return atlas_id("terrain2", id)
 end
+terrain2 = lower
 function item(id)
 return atlas_id("items", id)
-end
--- sneakily swap out the terrain atlas with the extra atlas
-function terrain(id)
-return upper(id)
 end
 function door(tex)
 return "[combine:256x256:16,80="..tex
@@ -223,7 +221,7 @@ doors.register(name, {
 })
 end
 add.woodtype = function(name, description, bark, treetop, fancy, simple, planks, pillar, schema, stick)
-	local stick = stick or "minecraft:stick"
+local stick = stick or "minecraft:stick"
 add.plant(name.."wood_sapling", S("@1 Sapling", description), "sapling_"..description:lower()..".png", 1)
 add.wood(name.."wood", S("@1 Log", description), {
 	treetop, treetop, bark
@@ -238,20 +236,31 @@ add.wood(name.."planks", S("@1 Planks", description), {
 add.stairs(name.."plank", description, {
 	planks
 }, "wood", name.."planks")
+add.door(name.."door", S("@1 Door", description), door(description:lower() .."_door.png"), description:lower().."_door_inv.png", name.."planks", "choppy")
 add.exchange(name.."wood", name.."planks 4")
 core.register_craft({
 	output = stick.." 4",
 	recipe = {
-		{name.."wood"},
-		{name.."wood"}
+		{
+			name.."wood"
+		},
+		{
+			name.."wood"
+		}
 	}
 })
 core.register_craft({
 	output = name.."pillar",
 	recipe = {
-		{name.."planks", stick, name.."planks"},
-		{stick, "", stick},
-		{name.."planks", stick, name.."planks"}
+		{
+			name.."planks", stick, name.."planks"
+		},
+		{
+			stick, "", stick
+		},
+		{
+			name.."planks", stick, name.."planks"
+		}
 	}
 })
 if core.settings:get_bool("sp_saplings", true) == true then

@@ -67,7 +67,7 @@ do
 	end)
 end
 --- entrance door
-add.door("hub:entrance", "Hub Door", door("iron_door.png"), item(43).."^[colorizehsl:0:0^[makealpha:0,0,0^[brighten", "minecraft:iron_ingot", "cracky")
+add.door("hub:entrance", "Hub Door", door("iron_door.png"),"iron_door_inv.png", "minecraft:iron_ingot", "cracky")
 add.group("hub:entrance_a", "falling_node", 1)
 ---- entrance rooms
 add.override("hub:entrance_a", "on_rightclick", function(pos, node, clicker)

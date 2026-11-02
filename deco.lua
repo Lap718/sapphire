@@ -2,6 +2,10 @@ add.stone("minecraft:dbg1", "DEBUG", {terrain(150)})
 add.stone("minecraft:dw", "Dimension Wall", {terrain(149)})
 add.grass("minecraft:path", "Grass Path", {terrain(228), terrain(2), terrain(229)})
 add.gravel("minecraft:df", "Dimension Floor", {terrain(148)})
+add.stone("minecraft:slatebricks", "Slate Bricks", {terrain2(6)})
+add.stone("minecraft:slatebeacon", "Slate Beacon", {terrain2(7)})
+add.stone("minecraft:stoneblock", "Smooth Stone Block", {terrain(195)})
+add.stone("minecraft:slatepillar", "Slate Pillar", {terrain2(9), terrain2(9), terrain2(8)})
 add.grass("minecraft:df_blue", "Blue Dimension Tile", {terrain(151)})
 add.wood("minecraft:bookshelf_empty", "Shelf", {terrain(4), terrain(4), terrain(109)})
 add.snow("minecraft:df_yellow", "Yellow Dimension Tile", {terrain(152)})
@@ -29,6 +33,10 @@ do
 	add.unbreaking(name)
 end
 local recipes = {
+	stoneblock = {
+		{"minecraft:stone", "minecraft:stone"},
+		{"minecraft:stone", "minecraft:stone"}
+	},
 	df = {
 		{"minecraft:df_yellow", "minecraft:df_blue"},
 		{"minecraft:df_blue", "minecraft:df_yellow"},
