@@ -18,6 +18,7 @@ dofile(path .. "abm.lua")
 dofile(path .. "hub.lua")
 dofile(path .. "moves.lua")
 dofile(path .. "chunks.lua")
+dofile(path .. "plates.lua")
 path = nil
 flowers = nil
 tools = nil

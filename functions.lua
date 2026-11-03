@@ -84,11 +84,15 @@ add.override(name, "paramtype", "light")
 add.override(name, "sunlight_propagates", true)
 add.override(name, "use_texture_alpha", true)
 end
+add.instamine = function(name)
+add.group(name, "dig_immediate")
+end
 add.group = function(name, group, value)
 if not value then
 local value = 2
 end
-local groups = core.registered_nodes[name].groups
+local node = core.registered_nodes[name] or {groups = {}}
+local groups = node.groups
 groups[group] = value
 core.override_item(name, {
 	groups = groups
@@ -136,6 +140,7 @@ add.plant = function(name, description, tile, waving)
 add.grass(name, description, {
 	tile, tile.."^[transformFX"
 })
+add.group(name, "fleshy")
 add.light(name)
 add.fallthrough(name)
 add.invimage(name, tile)
@@ -146,6 +151,7 @@ add.leaves = function(name, description, fancy, simple)
 add.grass(name, description, {
 	"("..fancy..")^("..simple.."^[opacity:1)"
 })
+add.group(name, "fleshy")
 add.light(name)
 add.waving(name, 2)
 add.drawtype(name, "allfaces_optional")

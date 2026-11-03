@@ -87,7 +87,7 @@ add.override("hub:entrance_a", "on_rightclick", function(pos, node, clicker)
 	end)
 end)
 --- decoration door (for mapmakers)
-add.door("hub:deco", "Hub Door (Decoration)", door("iron_door.png"), item(43).."^[colorizehsl:0:0^[makealpha:0,0,0^[brighten", "unknown", "unbreaking")
+add.door("hub:deco", "Hub Door (Decoration)", door("iron_door.png"), "iron_door_inv.png", "unknown", "unbreaking")
 --- exit door
 add.metal("hub:exit", "Hub Door (Exit)", {"iron_door.png"})
 add.nodebox("hub:exit", { 	type = "fixed", 	fixed = { 		{-0.5000, -0.5000, -0.5000, 0.5000, 1.500, 0.5000} 	} })
