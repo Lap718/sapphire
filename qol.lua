@@ -61,3 +61,5 @@ core.override_item("minecraft:bookshelf", {tiles = {
 core.override_item("minecraft:leaves", {tiles = {
     "(".. terrain(52) ..")^((".. terrain(53) ..")^[opacity:1)"
 }})
+add.override("minecraft:ladder", "climbable", true)
+add.override("minecraft:ladder", "sounds", block_sound("ladder"))
