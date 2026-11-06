@@ -49,18 +49,8 @@ core.register_decoration({
     place_on = "minecraft:water_source",
     decoration = "alphaver:waterlily",
     sidelen = 16,
-    flags = {"liquid_surface"},
-    fill_ratio = .08,
-    y_min = -14,
-    y_max = 56,
-    biomes = {"grasslands", "beach", "sea"}
-})
-core.register_decoration({
-    deco_type = "simple",
-    place_on = "minecraft:sand",
-    decoration = "alphaver:waterlily",
-    sidelen = 16,
-    fill_ratio = .08,
+    flags = "liquid_surface",
+    fill_ratio = .02,
     y_min = -14,
     y_max = 56,
     biomes = {"grasslands", "beach", "sea"}
