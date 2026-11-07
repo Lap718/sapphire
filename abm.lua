@@ -11,7 +11,7 @@ core.register_abm({
 core.register_abm({
 	label = "recruiter dying",
 	nodenames = "alphaver:recruit",
-  neighbors = {"minecraft:tnt", "minecraft:torch", "minecraft:torch_wall"},
+	neighbors = {"minecraft:tnt", "minecraft:torch", "minecraft:torch_wall"},
 	interval = 1.0,
 	chance = 1,
 	action = function(pos)
@@ -27,6 +27,27 @@ core.register_abm({
 		if core.get_node(vector.offset(pos, 0, 1, 0))["name"] == "air" then
 			core.set_node(vector.offset(pos, 0, 1, 0), {name = "alphaver:recruit"})
 		end
+	end
+})
+-- snow and grass
+core.register_abm({
+	label = "snow goes on grass",
+	nodenames = "minecraft:grass",
+	neighbors = "minecraft:snow_layer",
+	interval = 0.1,
+	chance = 1,
+	action = function(pos)
+		core.set_node(pos, {name = "minecraft:snow"})
+	end
+})
+core.register_abm({
+	label = "snow goes off grass",
+	nodenames = "minecraft:snow",
+	without_neighbors = "minecraft:snow_layer",
+	interval = 0.2,
+	chance = 1,
+	action = function(pos)
+		core.set_node(pos, {name = "minecraft:grass"})
 	end
 })
 -- hub stuff
