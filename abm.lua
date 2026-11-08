@@ -30,10 +30,68 @@ core.register_abm({
 	end
 })
 -- snow and grass
+--- for frigidfields mapgen
+core.register_abm({
+	label = "snow goes on sand",
+	nodenames = "minecraft:sand",
+	neighbors = {"minecraft:snowy_grass", "minecraft:snow_layer", "minecraft:snow", "minecraft:snow_block"},
+	interval = 0.1,
+	chance = 1,
+	action = function(pos)
+		core.set_node(pos, {name = "minecraft:snow_block"})
+	end
+})
+core.register_abm({
+	label = "ice goes on water",
+	nodenames = "minecraft:water_source",
+	neighbors = {"minecraft:snowy_grass", "minecraft:snow_layer", "minecraft:snow", "minecraft:snow_block"},
+	interval = 0.1,
+	chance = 1,
+	action = function(pos)
+		if core.get_node(vector.offset(pos, 0, 1, 0))["name"] == "air" then
+		core.set_node(vector.offset(pos, 0, 1, 0), {name = "minecraft:ice_layer"})
+		end
+	end
+})
+core.register_abm({
+	label = "snow goes on mapgen snow",
+	nodenames = "minecraft:snowy_grass",
+	interval = 0.1,
+	chance = 1,
+	action = function(pos)
+		core.set_node(pos, {name = "minecraft:snow"})
+		if core.get_node(vector.offset(pos, 0, 1, 0))["name"] == "air" then
+		core.set_node(vector.offset(pos, 0, 1, 0), {name = "minecraft:snow_layer"})
+		end
+	end
+})
+core.register_abm({
+	label = "frigid trunk goes down",
+	nodenames = "minecraft:ice_stem",
+	interval = 0.1,
+	chance = 1,
+	action = function(pos)
+		if core.get_node(vector.offset(pos, 0, -1, 0))["name"] == "minecraft:snow_layer" then
+		core.set_node(vector.offset(pos, 0, -1, 0), {name = "minecraft:ice_stem"})
+		end
+	end
+})
+core.register_abm({
+	label = "frigid leaves grow",
+	nodenames = "minecraft:ice_stem",
+	interval = 0.1,
+	chance = 1,
+	action = function(pos)
+		if core.get_node(vector.offset(pos, 0, 1, 0))["name"] == "air" then
+		core.set_node(pos, {name = "minecraft:ice_leaves"})
+		end
+	end
+})
+--- for gameplay
 core.register_abm({
 	label = "snow goes on grass",
 	nodenames = "minecraft:grass",
-	neighbors = "minecraft:snow_layer",
+	neighbors = {"minecraft:snow_layer", "minecraft:snow_block"},
 	interval = 0.1,
 	chance = 1,
 	action = function(pos)
@@ -43,7 +101,7 @@ core.register_abm({
 core.register_abm({
 	label = "snow goes off grass",
 	nodenames = "minecraft:snow",
-	without_neighbors = "minecraft:snow_layer",
+	without_neighbors = {"minecraft:snow_layer", "minecraft:snow_block"},
 	interval = 0.2,
 	chance = 1,
 	action = function(pos)
