@@ -56,6 +56,8 @@ add.nodebox("minecraft:ice_layer", core.registered_nodes["minecraft:snow_layer"]
 add.drop("minecraft:ice_layer", "minecraft:ice")
 add.glass("minecraft:ice_leaves", "Frigid Leaves", {terrain(224)})
 add.plant("minecraft:ice_stem", "Frigid Trunk", terrain(131))
+add.item("minecraft:ice_nuggets", "Frigid Bits", "ice_nuggets.png")
+add.exchange("minecraft:ice_stem", "minecraft:ice_nuggets 3")
 --- decorations
 core.register_biome({
 	name = "frigidfields",
@@ -86,11 +88,12 @@ core.register_decoration({
 	deco_type = "simple",
 	place_on = "minecraft:water_source",
 	decoration = "minecraft:ice_layer",
+	flags = "liquid_surface",
 	sidelen = 16,
 	fill_ratio = 1,
 	y_min = 0,
 	y_max = 85,
-	height_max = 3,
-	height_min = 2,
+	height_max = 5,
+	height_min = 3,
 	biomes = {"frigidfields"}
 })
