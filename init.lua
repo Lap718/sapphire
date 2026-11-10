@@ -1,26 +1,38 @@
 path = core.get_modpath("sapphire") .. "/"
-colours = {"Pink", "Blue", "Green", "Black"}
-tools = {"Sword", "Shovel", "Pick", "Axe", "Hoe"}
+colours = {
+	"Pink", "Blue", "Green", "Black"
+}
+tools = {
+	"Sword", "Shovel", "Pick", "Axe", "Hoe"
+}
 flowers = core.settings:get("sp_flowers")
-toolGroups = {"fleshy", "crumbly", "cracky", "choppy", "oddly_breakable_by_hand"}
+toolGroups = {
+	"fleshy", "crumbly", "cracky", "choppy", "oddly_breakable_by_hand"
+}
 S = core.get_translator("sapphire")
-dofile(path .. "functions.lua")
-dofile(path .. "quads.lua")
-dofile(path .. "dyes.lua")
-dofile(path .. "wool.lua")
-dofile(path .. "obsidian.lua")
-dofile(path .. "plants.lua")
-dofile(path .. "qol.lua")
-dofile(path .. "deco.lua")
-dofile(path .. "version.lua")
-dofile(path .. "wood.lua")
-dofile(path .. "abm.lua")
-dofile(path .. "hub.lua")
-dofile(path .. "moves.lua")
-dofile(path .. "chunks.lua")
-dofile(path .. "plates.lua")
-dofile(path .. "biomes.lua")
-dofile(path .. "chat.lua")
+local scripts = {
+	"functions",
+	"quads",
+	"greenstone",
+	"dyes",
+	"wool",
+	"obsidian",
+	"plants",
+	"qol",
+	"deco",
+	"version",
+	"abm",
+	"hub",
+	"moves",
+	"chunks",
+	"plates",
+	"biomes",
+	"chat",
+	"wood"
+}
+for _, name in ipairs(scripts) do
+dofile(path..name..".lua")
+end
 path = nil
 flowers = nil
 tools = nil
@@ -33,6 +45,5 @@ S = nil
 ---> add more wood types
 ---> add grass variants
 --- add workbench types
---- chatcommands for setting the versionstring per-world
 --- add the low river
 --- add more building blocks

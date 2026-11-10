@@ -33,6 +33,7 @@ end
 -- make the functions to easily make nodes
 local materials = {
 	cloth = "crumbly",
+	sand = "crumbly",
 	snow = "crumbly",
 	wood = "choppy",
 	gravel = "crumbly",
@@ -91,7 +92,8 @@ add.group = function(name, group, value)
 if not value then
 local value = 2
 end
-local node = core.registered_nodes[name] or {groups = {}}
+local node = core.registered_nodes[name] or {
+	groups = {}}
 local groups = node.groups
 groups[group] = value
 core.override_item(name, {
@@ -123,7 +125,11 @@ add.override(name, "mesh", mesh)
 end
 ---- functions that register new items with some special properties
 add.clone = function(name, newname)
-core.register_node(":"..newname, core.registered_nodes[name])
+	local def = {}
+for key, value in pairs(core.registered_nodes[name]) do
+	def[key] = value
+end
+core.register_node(":"..newname, def)
 end
 add.glass = function(name, description, tiles)
 add.stone(name, description, tiles)
@@ -229,19 +235,11 @@ end
 add.woodtype = function(name, description, bark, treetop, fancy, simple, planks, pillar, schema, stick)
 local stick = stick or "minecraft:stick"
 add.plant(name.."wood_sapling", S("@1 Sapling", description), "sapling_"..description:lower()..".png", 1)
-add.wood(name.."wood", S("@1 Log", description), {
-	treetop, treetop, bark
-})
-add.wood(name.."pillar", S("Pillar (@1)", description), {
-	pillar
-})
+add.wood(name.."wood", S("@1 Log", description), {treetop, treetop, bark})
+add.wood(name.."pillar", S("Pillar (@1)", description), {pillar})
 add.leaves(name.."leaves", S("@1 Leaves", description), fancy, simple)
-add.wood(name.."planks", S("@1 Planks", description), {
-	planks
-})
-add.stairs(name.."plank", description, {
-	planks
-}, "wood", name.."planks")
+add.wood(name.."planks", S("@1 Planks", description), {planks})
+add.stairs(name.."plank", description, {planks}, "wood", name.."planks")
 add.door(name.."door", S("@1 Door", description), door(description:lower() .."_door.png"), description:lower().."_door_inv.png", name.."planks", "choppy")
 add.exchange(name.."wood", name.."planks 4")
 core.register_craft({
