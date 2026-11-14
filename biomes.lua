@@ -9,7 +9,7 @@ core.register_biome({
 	depth_riverbed = 1,
 	y_min = -14,
 	y_max = 56,
-	heat_point = 95.0,
+	heat_point = 75.0,
 	humidity_point = 13
 })
 --- decorations
@@ -53,7 +53,8 @@ add.glass("minecraft:ice", "Ice", {
 add.glass("minecraft:ice_layer", "Ice Layer", {
 	terrain(67)})
 add.nodebox("minecraft:ice_layer", core.registered_nodes["minecraft:snow_layer"].node_box)
-add.waving("minecraft:ice_layer", 3)
+add.drawtype("minecraft:ice_layer", "signlike")
+add.override("minecraft:ice_layer", "buildable_to", true)
 add.drop("minecraft:ice_layer", "minecraft:ice")
 add.glass("minecraft:ice_leaves", "Frigid Leaves", {
 	terrain(224)})
@@ -100,7 +101,7 @@ core.register_biome({
 	y_max = 12,
 	y_min = 0,
 	heat_point = 39,
-	humidity_point = 153
+	humidity_point = 73
 })
 core.register_decoration({
 	deco_type = "schematic",

@@ -42,10 +42,7 @@ core.register_on_joinplayer(function(player)
 	end
 	end)
 -- actually make the new moves
-core.register_globalstep(function(dtime)
-	for num, player in pairs(core.get_connected_players())
-	do
-	if player:is_valid() then
+add.playerstep(function(dtime, player)
 	local vel = player:get_velocity()
 	if vel.x == 0 and vel.z == 0 then
 	velly = false
@@ -118,8 +115,6 @@ core.register_globalstep(function(dtime)
 		x = math.sin(player:get_look_horizontal()) * -16, y = 0, z = math.cos(player:get_look_horizontal()) * 16
 	})
 	zoomdb[playername] = 0
-	end
-	end
 	end
 	velly = nil
 	vell = nil

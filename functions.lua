@@ -179,7 +179,7 @@ core.register_abm({
 		core.add_particle({
 			pos = vector.offset(pos, math.random(-5,5) / 10, math.random(-10,0) / 10, math.random(-5,5) / 10),
 			velocity = {
-				x = 0, y = -0.5 * math.random(1, 1.5), z = 0
+				x = 0, y = -5 * math.random(2, 15) / 100, z = 0
 			},
 			expirationtime = 8 * math.random(0.3, 1),
 			size = 3.0 * math.random(0.8, 1),
@@ -307,4 +307,15 @@ core.register_abm({
 	end
 })
 end
+end
+---- misc
+add.playerstep = function(action)
+	core.register_globalstep(function(dtime)
+		for num, player in pairs(core.get_connected_players())
+		do
+			if player:is_valid() then
+				action(dtime, player)
+			end
+		end
+	end)
 end

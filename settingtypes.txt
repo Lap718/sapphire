@@ -32,3 +32,8 @@ sp_craft_paths (Craftable Grass Paths) bool false
 # Whether the dash bar should be inside the hotbar. If not,
 # make a separate UI element for it.
 sp_dashotbar (Use Hotbar as Dashbar) bool false
+
+# Whether to use the 3D item models or the billboard ones. This 
+# setting only applies to items that simply use a flat
+# texture when held.
+sp_items (3D Items) bool false

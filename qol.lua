@@ -58,3 +58,57 @@ core.override_item("minecraft:bookshelf", {tiles = {
 add.leaves("minecraft:leaves", "Oak Leaves", terrain(52), terrain(53))
 add.override("minecraft:ladder", "climbable", true)
 add.override("minecraft:ladder", "sounds", block_sound("ladder"))
+if not core.settings:get_bool("sp_items", false) then
+	dtimes = {}
+	add.playerstep(function(dtime, player)
+		dtimes[#dtimes +1] = dtime
+		for num, obj in ipairs(core.get_objects_inside_radius(player:get_pos(), 37)) do
+			local item = obj:get_luaentity()
+			if item and item.itemstring and core.registered_items[item.itemstring] and core.registered_items[item.itemstring].inventory_image and item.name == "__builtin:item" and core.registered_items[item.itemstring].inventory_image:find(".") and not core.get_node({x=math.floor(obj:get_pos().x),y=math.floor(obj:get_pos().y+.5),z=math.floor(obj:get_pos().z)})["name"]:find("water") then
+				the_dtime = 0
+				for num, the_time in pairs(dtimes)
+				do
+					the_dtime = the_dtime + the_time + 0.1
+				end
+				the_dtime = the_dtime / #dtimes
+				image = core.registered_items[item.itemstring].inventory_image
+				shadow = "shadow.png"
+				if player:get_look_vertical() > 1 or player:get_look_vertical() < -1 then
+					shadow = "object_marker_red.png^[colorize:black:255"
+				end
+				shadowtex = shadow.."^[opacity:80^"
+				shadow = core.get_spawn_level(math.floor(obj:get_pos().x), math.floor(obj:get_pos().z)) or math.floor(obj:get_pos().y+.5) - 1
+				expirationtime = the_dtime +.1
+				repeat
+					shadow = shadow - 1
+				until shadow < obj:get_pos().y and core.get_node({x=math.floor(obj:get_pos().x), y=shadow,z=math.floor(obj:get_pos().z)})["name"] ~= "air"
+				if obj:get_velocity() ~= {x=0, y=0, z=0} then
+					expirationtime = 0.01
+					velocity = {x=0,y=0,z=0}
+				end
+				core.add_particle({
+					pos = {x=obj:get_pos().x, y=shadow+0.7, z=obj:get_pos().z},
+					velocity = {x=velocity.x, y=0, z=velocity.z},
+					expirationtime = expirationtime,
+					size = 5,
+					texture = shadowtex
+				})
+				core.add_particle({
+					pos = vector.offset(obj:get_pos(), 0, 0.25 - (((os.time()or (#dtimes / 10000)) % 2) / 6), 0),
+					vertical = true,
+					velocity = velocity,
+					expirationtime = expirationtime,
+					size = 5,
+					texture = image
+				})
+				obj:set_properties({
+					visual = "mesh",
+					mesh = "alphaver_ice_branches_big"
+				})
+				image = nil
+				shadow = nil
+				expirationtime = nil
+			end
+		end
+	end)
+end
