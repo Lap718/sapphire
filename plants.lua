@@ -63,7 +63,7 @@ core.register_decoration({
     fill_ratio = .08,
     y_min = -14,
     y_max = 56,
-    biomes = {"grasslands", "beach", "sea"}
+    biomes = {"grasslands", "beach", "forest"}
 })
 core.register_decoration({
     deco_type = "simple",
@@ -74,7 +74,7 @@ core.register_decoration({
     fill_ratio = .02,
     y_min = -14,
     y_max = 56,
-    biomes = {"grasslands", "beach", "sea"}
+    biomes = {"beach"}
 })
 core.register_decoration({
     deco_type = "simple",
@@ -84,7 +84,7 @@ core.register_decoration({
     fill_ratio = .08,
     y_min = -14,
     y_max = 3100,
-    biomes = {"grasslands", "beach", "sea"}
+    biomes = {"grasslands", "beach", "sea", "frigidfields", "frigidforest"}
 })
 core.register_decoration({
     deco_type = "simple",
@@ -94,5 +94,5 @@ core.register_decoration({
     fill_ratio = .08,
     y_min = -14,
     y_max = 3100,
-    biomes = {"grasslands", "beach", "sea"}
+    biomes = {"grasslands", "forest"}
 })

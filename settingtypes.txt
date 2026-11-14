@@ -4,8 +4,12 @@
 sp_versionum (Version number) string BackToAlpha a1.0.16_05 Sapphire
 
 [Tweaks]
-# Whether to use the top texture for firewood or not.
-sp_firewood (Firewood top texture) bool false
+# Whether to use the top texture for flamewood or not.
+sp_firewood (Flamewood Top Texture) bool false
+
+# Whether to add more biomes or not.
+sp_flowers (Biome Diversity) bool true
+
 # Choose the accent color for the wooden work bench.
 sp_workbench (Wooden Workbench Accent Color) enum blue blue,brown
 

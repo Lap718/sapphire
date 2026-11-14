@@ -27,6 +27,7 @@ local scripts = {
 	"chunks",
 	"plates",
 	"biomes",
+	"flowers",
 	"chat",
 	"wood"
 }

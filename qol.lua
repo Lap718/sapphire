@@ -1,5 +1,3 @@
--- slab changes
---- planks slab change
 add.override("minecraft:plank_slab", "tiles", {terrain(138), terrain(138), terrain(137)})
 add.wood("minecraft:plank_slab_block", "tile.woodSlab", {terrain(138), terrain(138), terrain(137)})
 add.drop("minecraft:plank_slab_block", "minecraft:plank_slab")
@@ -14,7 +12,6 @@ do
 		connect_slab(pos, "minecraft:"..name.."_slab", "minecraft:"..full)
 	end)
 end
--- recipe for leather
 core.register_craft({
 	output = "mobs:leather 2",
 	recipe = {"minecraft:paper", "mobs_mc:rotten_flesh"},
@@ -58,8 +55,6 @@ end
 core.override_item("minecraft:bookshelf", {tiles = {
     terrain(4), terrain(4), terrain(108)
 }})
-core.override_item("minecraft:leaves", {tiles = {
-    "(".. terrain(52) ..")^((".. terrain(53) ..")^[opacity:1)"
-}})
+add.leaves("minecraft:leaves", "Oak Leaves", terrain(52), terrain(53))
 add.override("minecraft:ladder", "climbable", true)
 add.override("minecraft:ladder", "sounds", block_sound("ladder"))

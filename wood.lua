@@ -12,7 +12,7 @@ core.register_decoration({
     fill_ratio = .005,
     y_min = -14,
     y_max = 56,
-    biomes = {"grasslands", "beach", "sea", "city"}
+    biomes = {"grasslands", "beach", "sea", "forest"}
 })
 if core.settings:get_bool("sp_workbench", true) == false then
     add.override("minecraft:crafting_table", "tiles", {

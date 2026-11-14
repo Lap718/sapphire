@@ -10,6 +10,14 @@ end
 function door(tex)
 return "[combine:256x256:16,80="..tex
 end
+-- remove the build limit by making layer_to_y(128) return 3100
+local old_to_y = layer_to_y
+function layer_to_y(height)
+	if height == 128 then
+		height = 3162
+	end
+	return old_to_y(height)
+end
 -- function to apply(, assuming it doesn't have invisible color,) another texture's alpha onto a texture
 function alphacutout(source, destination)
 return "("..source.."^[screen:#010101)^("..destination.."^[invert:a)^[makealpha:0,0,0"
@@ -161,6 +169,24 @@ add.group(name, "fleshy")
 add.light(name)
 add.waving(name, 2)
 add.drawtype(name, "allfaces_optional")
+core.register_abm({
+	label = "particles for "..description:lower(),
+	nodenames = name,
+	interval = 10,
+	chance = 4,
+	action = function(pos)
+		pnum = math.random(1, 3)
+		core.add_particle({
+			pos = vector.offset(pos, math.random(-5,5) / 10, math.random(-10,0) / 10, math.random(-5,5) / 10),
+			velocity = {
+				x = 0, y = -0.5 * math.random(1, 1.5), z = 0
+			},
+			expirationtime = 8 * math.random(0.3, 1),
+			size = 3.0 * math.random(0.8, 1),
+			texture = "("..simple.."^[resize:1x1)^[contrast:0:-64^[overlay:leaf_"..pnum..".png^[makealpha:0,0,0"
+		})
+	end
+})
 end
 add.exchange = function(old, new)
 core.register_craft({
