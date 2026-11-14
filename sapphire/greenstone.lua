@@ -1,0 +1,26 @@
+-- add green stone
+add.sand("minecraft:greenstone", "Greenstone", {terrain(85).."^[transformR90", "greenstone_curve.png^[colorize:black:128", "greenstone_t_junction.png^[colorize:black:128", terrain(85)})
+add.nodebox("minecraft:greenstone", { type = "fixed", fixed = { {-0.5, -0.5, -0.5, 0.5, -0.38, 0.5} } })
+add.drawtype("minecraft:greenstone", "raillike")
+add.invimage("minecraft:greenstone", item(40) .."^[colorize:green:128^[contrast:64")
+add.override("minecraft:greenstone", "wield_image", item(40) .."^[colorize:green:128^[contrast:64")
+add.ore("minecraft:greenstone", "Greenstone Ore", {terrain(51)}, "minecraft:stone", 30)
+add.clone("minecraft:greenstone_ore", "minecraft:lightstone_ore")
+add.drop("minecraft:lightstone_ore", "minecraft:greenstone_ore")
+add.glow("minecraft:lightstone_ore", 5)
+--- greenstone & lightstone logic
+add.override("minecraft:greenstone_ore", "on_punch", function(pos)
+	core.set_node(pos, {name = "minecraft:lightstone_ore"})
+	core.after(2.5, function()
+		if core.get_node(pos)["name"] == "minecraft:lightstone_ore" then
+			core.set_node(pos, {name = "minecraft:greenstone_ore"})
+		end
+	end)
+end)
+luanti_utils.dofile("node_on_player_walk.lua")
+add.override("minecraft:greenstone_ore", "on_player_walk_enter", function(pos)
+	core.set_node(pos, {name = "minecraft:lightstone_ore"})
+end)
+add.override("minecraft:lightstone_ore", "on_player_walk_leave", function(pos)
+	core.set_node(pos, {name = "minecraft:greenstone_ore"})
+end)

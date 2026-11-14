@@ -1,0 +1,321 @@
+-- functions for certain atlases
+upper = terrain
+function lower(id)
+return atlas_id("terrain2", id)
+end
+terrain2 = lower
+function item(id)
+return atlas_id("items", id)
+end
+function door(tex)
+return "[combine:256x256:16,80="..tex
+end
+-- remove the build limit by making layer_to_y(128) return 3100
+local old_to_y = layer_to_y
+function layer_to_y(height)
+	if height == 128 then
+		height = 3162
+	end
+	return old_to_y(height)
+end
+-- function to apply(, assuming it doesn't have invisible color,) another texture's alpha onto a texture
+function alphacutout(source, destination)
+return "("..source.."^[screen:#010101)^("..destination.."^[invert:a)^[makealpha:0,0,0"
+end
+-- function for easy building of custom tool textures
+function tool(tile, num, stick)
+return alphacutout(terrain(tile) .."^".. item(stick), item(16 *(num + 3) + 2))
+end
+--function for making slabs connect
+function connect_slab(pos, name, full)
+local below = vector.offset(pos, 0, -1, 0)
+if core.get_node(below)["name"] == name then
+core.set_node(below, {
+	name = full
+})
+core.set_node(pos, {
+	name = "air"
+})
+end
+end
+-- make the functions to easily make nodes
+local materials = {
+	cloth = "crumbly",
+	sand = "crumbly",
+	snow = "crumbly",
+	wood = "choppy",
+	gravel = "crumbly",
+	metal = "cracky",
+	grass = "crumbly",
+	stone = "cracky",
+	ladder = "choppy"
+}
+add = {}
+--- iterate over the local table
+for material, group in pairs(materials)
+do
+add[material] = function(name, description, tiles)
+local groups = {}
+groups[group] = 2
+core.register_node(":"..name, {
+	description = S(description),
+	sounds = block_sound(material),
+	groups = groups,
+	tiles = tiles
+})
+end
+end
+--- add a few extra add functions
+---- basic overrides to be used later
+add.override = function(name, key, value)
+core.override_item(name, {
+	[key] = value
+})
+end
+local simple_overrides = {
+	invimage = "inventory_image",
+	glow = "light_source",
+	waving = "waving",
+	rotate = "paramtype2",
+	drop = "drop",
+	drawtype = "drawtype",
+}
+for short, long in pairs(simple_overrides)
+do
+add[short] = function(name, value)
+core.override_item(name, {
+	[long] = value
+})
+end
+end
+add.light = function(name)
+add.override(name, "paramtype", "light")
+add.override(name, "sunlight_propagates", true)
+add.override(name, "use_texture_alpha", true)
+end
+add.instamine = function(name)
+add.group(name, "dig_immediate")
+end
+add.group = function(name, group, value)
+if not value then
+local value = 2
+end
+local node = core.registered_nodes[name] or {
+	groups = {}}
+local groups = node.groups
+groups[group] = value
+core.override_item(name, {
+	groups = groups
+})
+end
+add.fallthrough = function(name)
+add.override(name, "walkable", false)
+end
+add.nodebox = function(name, nodebox)
+add.drawtype(name, "nodebox")
+add.light(name)
+add.override(name, "node_box", nodebox)
+add.override(name, "selection_box", nodebox)
+end
+add.unbreaking = function(name)
+local digroups = {
+	"cracky", "crumbly", "choppy"
+}
+for num, gname in ipairs(digroups)
+do
+add.group(name, gname, 0)
+end
+end
+add.mesh = function(name, mesh)
+add.drawtype(name, "mesh")
+add.light(name)
+add.override(name, "mesh", mesh)
+end
+---- functions that register new items with some special properties
+add.clone = function(name, newname)
+	local def = {}
+for key, value in pairs(core.registered_nodes[name]) do
+	def[key] = value
+end
+core.register_node(":"..newname, def)
+end
+add.glass = function(name, description, tiles)
+add.stone(name, description, tiles)
+add.light(name)
+add.drawtype (name, "glasslike_framed_optional")
+add.group(name, "oddly_breakable_by_hand")
+end
+add.item = function(name, description, invimage)
+core.register_craftitem(":"..name, {})
+add.override(name, "description", S(description))
+add.invimage(name, invimage)
+end
+add.plant = function(name, description, tile, waving)
+add.grass(name, description, {
+	tile, tile.."^[transformFX"
+})
+add.group(name, "fleshy")
+add.light(name)
+add.fallthrough(name)
+add.invimage(name, tile)
+add.waving(name, waving)
+add.drawtype(name, "plantlike")
+end
+add.leaves = function(name, description, fancy, simple)
+add.grass(name, description, {
+	"("..fancy..")^("..simple.."^[opacity:1)"
+})
+add.group(name, "fleshy")
+add.light(name)
+add.waving(name, 2)
+add.drawtype(name, "allfaces_optional")
+core.register_abm({
+	label = "particles for "..description:lower(),
+	nodenames = name,
+	interval = 10,
+	chance = 4,
+	action = function(pos)
+		pnum = math.random(1, 3)
+		core.add_particle({
+			pos = vector.offset(pos, math.random(-5,5) / 10, math.random(-10,0) / 10, math.random(-5,5) / 10),
+			velocity = {
+				x = 0, y = -5 * math.random(2, 15) / 100, z = 0
+			},
+			expirationtime = 8 * math.random(0.3, 1),
+			size = 3.0 * math.random(0.8, 1),
+			texture = "("..simple.."^[resize:1x1)^[contrast:0:-64^[overlay:leaf_"..pnum..".png^[makealpha:0,0,0"
+		})
+	end
+})
+end
+add.exchange = function(old, new)
+core.register_craft({
+	recipe = {{
+		old
+	}},
+	output = new
+})
+end
+add.stairs = function(name, description, tiles, material, full)
+local desc = core.translate("sapphire", description)
+add[material](name.."_slab", S("@1 Slab", desc), tiles)
+add.nodebox(name.."_slab", {
+	type = "fixed", fixed = {
+		{
+			-0.5000, -0.5000, -0.5000, 0.5000, 0.000, 0.5000
+		}
+	}
+})
+add.override(name.."_slab", "on_construct", function(pos)
+	connect_slab(pos, name.."_slab", full)
+	end)
+add[material](name.."_stair", S("@1 Stairs", desc), tiles)
+add.rotate(name.."_stair", "facedir")
+add.nodebox(name.."_stair", {
+	type = "fixed", fixed = {
+		{
+			-0.5000, -0.5000, -0.5000, 0.5000, 0.000, 0.5000
+		}, {
+			-0.5000, 0.000, 0.000, 0.5000, 0.5000, 0.5000
+		}
+	}
+})
+end
+add.ore = function(material, description, tiles, wherein, y_max)
+add.stone(material.."_ore", description, tiles)
+add.drop(material.."_ore", material)
+core.register_ore({
+	ore_type = "scatter",
+	ore = material.."_ore",
+	wherein = wherein,
+	clust_scarcity = 8 ^ 3,
+	clust_size = 8,
+	clust_num_ores = 16,
+	y_min = -3100,
+	y_max = y_max,
+})
+end
+add.door = function(name, description, sheet, invimage, base, material)
+doors.register(name, {
+	description = S(description),
+	tiles = {{
+		name = sheet, backface_culling = true
+	}},
+	inventory_image = invimage,
+	groups = {
+		[material] = 1
+	},
+	recipe = {
+		{
+			base, base
+		},
+		{
+			base, base
+		},
+		{
+			base, base
+		}
+	}
+})
+end
+add.woodtype = function(name, description, bark, treetop, fancy, simple, planks, pillar, schema, stick)
+local stick = stick or "minecraft:stick"
+add.plant(name.."wood_sapling", S("@1 Sapling", description), "sapling_"..description:lower()..".png", 1)
+add.wood(name.."wood", S("@1 Log", description), {treetop, treetop, bark})
+add.wood(name.."pillar", S("Pillar (@1)", description), {pillar})
+add.leaves(name.."leaves", S("@1 Leaves", description), fancy, simple)
+add.wood(name.."planks", S("@1 Planks", description), {planks})
+add.stairs(name.."plank", description, {planks}, "wood", name.."planks")
+add.door(name.."door", S("@1 Door", description), door(description:lower() .."_door.png"), description:lower().."_door_inv.png", name.."planks", "choppy")
+add.exchange(name.."wood", name.."planks 4")
+core.register_craft({
+	output = stick.." 4",
+	recipe = {
+		{
+			name.."wood"
+		},
+		{
+			name.."wood"
+		}
+	}
+})
+core.register_craft({
+	output = name.."pillar",
+	recipe = {
+		{
+			name.."planks", stick, name.."planks"
+		},
+		{
+			stick, "", stick
+		},
+		{
+			name.."planks", stick, name.."planks"
+		}
+	}
+})
+if core.settings:get_bool("sp_saplings", true) == true then
+add.exchange(name.."leaves", name.."wood_sapling")
+core.register_abm({
+	label = description:lower() .." sapling growing",
+	nodenames = name.."wood_sapling",
+	interval = 12.5,
+	chance = 32,
+	action = function(pos)
+	if can_grow(pos) then
+	core.place_schematic(vector.offset(pos, -2, 0, -2), schema)
+	end
+	end
+})
+end
+end
+---- misc
+add.playerstep = function(action)
+	core.register_globalstep(function(dtime)
+		for num, player in pairs(core.get_connected_players())
+		do
+			if player:is_valid() then
+				action(dtime, player)
+			end
+		end
+	end)
+end
