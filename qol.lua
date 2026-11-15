@@ -72,12 +72,16 @@ if not core.settings:get_bool("sp_items", false) then
 				end
 				imagetable = {"blank.png"}
 				image = "("..core.registered_items[item.itemstring].inventory_image..")"
+				item_drop_y_size = 0.5
+				visual = "mesh"
 				if not image:find("sheet") then
+					visual = "upright_sprite"
 					image = texcape(image)
 					image = "^[combine:16x24:0,".. ((os.time() or 2) % 2 ) * 2 .."="..image
-					imagetable = {image}
-					image = "blank.png"
+					item_drop_y_size = 0.75
 				end
+				mesh = ((os.time() or 2) % 2 )
+				imagetable = {image}
 				shadow = "shadow.png"
 				if player:get_look_vertical() > 1 or player:get_look_vertical() < -1 then
 					shadow = "object_marker_red.png^[colorize:black:255"
@@ -100,18 +104,11 @@ if not core.settings:get_bool("sp_items", false) then
 					size = 5,
 					texture = shadowtex
 				})
-				core.add_particle({
-					pos = {x=obj:get_pos().x, y=obj:get_pos().y + ((os.time() or 2) % 2 ) * 0.1, z=obj:get_pos().z},
-					velocity = {x=velocity.x, y=0, z=velocity.z},
-					expirationtime = expirationtime,
-					size = 5,
-					texture = image,
-					vertical = true
-				})
 				obj:set_properties({
-					visual = "upright_sprite",
+					visual = visual,
+					mesh = "item_"..mesh..".obj",
 					textures = imagetable,
-					visual_size = {x=0.5,y=0.75},
+					visual_size = {x=0.5,y=item_drop_y_size},
 					automatic_rotate = 0
 				})
 				obj:set_rotation({x=0,y=player:get_look_horizontal(),z=0}, false)
