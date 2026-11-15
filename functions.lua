@@ -18,6 +18,13 @@ function layer_to_y(height)
 	end
 	return old_to_y(height)
 end
+-- function to escape texture modifiers
+function texcape(tex)
+	tex = tex:gsub("%^", [[\^]])
+	tex = tex:gsub("%[", [[\[]])
+	tex = tex:gsub("([%(%)])", [[\%1]])
+	return tex
+end
 -- function to apply(, assuming it doesn't have invisible color,) another texture's alpha onto a texture
 function alphacutout(source, destination)
 return "("..source.."^[screen:#010101)^("..destination.."^[invert:a)^[makealpha:0,0,0"

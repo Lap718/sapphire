@@ -64,24 +64,31 @@ if not core.settings:get_bool("sp_items", false) then
 		dtimes[#dtimes +1] = dtime
 		for num, obj in ipairs(core.get_objects_inside_radius(player:get_pos(), 37)) do
 			local item = obj:get_luaentity()
-			if item and item.itemstring and core.registered_items[item.itemstring] and core.registered_items[item.itemstring].inventory_image and item.name == "__builtin:item" and core.registered_items[item.itemstring].inventory_image:find(".") and not core.get_node({x=math.floor(obj:get_pos().x),y=math.floor(obj:get_pos().y+.5),z=math.floor(obj:get_pos().z)})["name"]:find("water") then
+			if item and item.itemstring and core.registered_items[item.itemstring] and core.registered_items[item.itemstring].inventory_image and (item.name == "__builtin:item"	) and core.registered_items[item.itemstring].inventory_image:find(".") and not core.get_node({x=math.floor(obj:get_pos().x),y=math.floor(obj:get_pos().y+.5),z=math.floor(obj:get_pos().z)})["name"]:find("water") then
 				the_dtime = 0
 				for num, the_time in pairs(dtimes)
 				do
-					the_dtime = the_dtime + the_time + 0.1
+					the_dtime = the_dtime + the_time + ( #dtimes)
 				end
-				the_dtime = the_dtime / #dtimes
-				image = core.registered_items[item.itemstring].inventory_image
+				imagetable = {"blank.png"}
+				image = "("..core.registered_items[item.itemstring].inventory_image..")"
+				if not image:find("sheet") then
+					image = texcape(image)
+					image = "^[combine:16x24:0,".. ((os.time() or 2) % 2 ) * 2 .."="..image
+					imagetable = {image}
+					image = "blank.png"
+				end
 				shadow = "shadow.png"
 				if player:get_look_vertical() > 1 or player:get_look_vertical() < -1 then
 					shadow = "object_marker_red.png^[colorize:black:255"
 				end
 				shadowtex = shadow.."^[opacity:80^"
 				shadow = core.get_spawn_level(math.floor(obj:get_pos().x), math.floor(obj:get_pos().z)) or math.floor(obj:get_pos().y+.5) - 1
-				expirationtime = the_dtime +.1
+				expirationtime = the_dtime +.2
+				shadow = shadow + 1
 				repeat
 					shadow = shadow - 1
-				until shadow < obj:get_pos().y and core.get_node({x=math.floor(obj:get_pos().x), y=shadow,z=math.floor(obj:get_pos().z)})["name"] ~= "air"
+				until shadow < obj:get_pos().y and core.get_node({x=math.floor(obj:get_pos().x), y=shadow,z=math.floor(obj:get_pos().z)})["name"] ~= "air" and core.get_node({x=math.floor(obj:get_pos().x), y=shadow+1,z=math.floor(obj:get_pos().z)})["name"] == "air"
 				if obj:get_velocity() ~= {x=0, y=0, z=0} then
 					expirationtime = 0.01
 					velocity = {x=0,y=0,z=0}
@@ -94,17 +101,20 @@ if not core.settings:get_bool("sp_items", false) then
 					texture = shadowtex
 				})
 				core.add_particle({
-					pos = vector.offset(obj:get_pos(), 0, 0.25 - (((os.time()or (#dtimes / 10000)) % 2) / 6), 0),
-					vertical = true,
-					velocity = velocity,
+					pos = {x=obj:get_pos().x, y=obj:get_pos().y + ((os.time() or 2) % 2 ) * 0.1, z=obj:get_pos().z},
+					velocity = {x=velocity.x, y=0, z=velocity.z},
 					expirationtime = expirationtime,
 					size = 5,
-					texture = image
+					texture = image,
+					vertical = true
 				})
 				obj:set_properties({
-					visual = "mesh",
-					mesh = "alphaver_ice_branches_big"
+					visual = "upright_sprite",
+					textures = imagetable,
+					visual_size = {x=0.5,y=0.75},
+					automatic_rotate = 0
 				})
+				obj:set_rotation({x=0,y=player:get_look_horizontal(),z=0}, false)
 				image = nil
 				shadow = nil
 				expirationtime = nil

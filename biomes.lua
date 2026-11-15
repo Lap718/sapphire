@@ -9,7 +9,7 @@ core.register_biome({
 	depth_riverbed = 1,
 	y_min = -14,
 	y_max = 56,
-	heat_point = 75.0,
+	heat_point = 62.0,
 	humidity_point = 13
 })
 --- decorations
@@ -20,7 +20,7 @@ core.register_decoration({
 	sidelen = 16,
 	fill_ratio = 0.005,
 	y_min = -14,
-	y_max = 56,
+	y_max = 36,
 	biomes = {
 		"city"
 	}
@@ -87,7 +87,7 @@ core.register_biome({
 	depth_riverbed = 3,
 	y_max = 12,
 	y_min = 0,
-	heat_point = 23,
+	heat_point = 28,
 	humidity_point = 95
 })
 core.register_biome({
@@ -100,8 +100,8 @@ core.register_biome({
 	depth_riverbed = 3,
 	y_max = 12,
 	y_min = 0,
-	heat_point = 39,
-	humidity_point = 73
+	heat_point = 30,
+	humidity_point = 30
 })
 core.register_decoration({
 	deco_type = "schematic",
