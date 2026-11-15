@@ -20,23 +20,22 @@ core.register_on_joinplayer(function(player)
 			y = 0.2
 		},
 		alignment = {
-			x = 0,y = 0
+      x = 0,
+      y = 0
 		},
 		offset = {
 			x = 0, y = 0
 		},
 		text = "ANO-NAMAN-ITO",
 		size = {
-			x = 2
+      x = 2,
+      y = 2
 		},
 		number = 0xDDEEEEEE,
 		style = 5
 	})
 	end)
-core.register_globalstep(function(dtime)
-	for _, player in ipairs(core.get_connected_players())
-	do
-	if player:is_valid() then
+add.playerstep(function(dtime, player)
 	local seed = math.random(-99, 99)
 	math.randomseed(math.floor(player:get_pos().x / 16) + math.floor(player:get_pos().z / 16))
 	x = ((math.floor(player:get_pos().x / 16) * math.random(-1, 3)).. ""):gsub("-", "KA")
@@ -52,6 +51,4 @@ core.register_globalstep(function(dtime)
 	player:hud_change(chunknameids[player:get_player_name()], "text", x..z)
 	x = nil
 	z = nil
-	end
-	end
-	end)
+end)
