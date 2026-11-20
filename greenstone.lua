@@ -1,5 +1,5 @@
 -- add green stone
-add.sand("minecraft:greenstone", "Greenstone", {terrain(85).."^[transformR90", "greenstone_curve.png^[colorize:black:128", "greenstone_t_junction.png^[colorize:black:128", terrain(85)})
+add.sand("minecraft:greenstone", "Greenstone", {terrain(85).."^[transformR90", "("..terrain(84).."^(greenstone_curve.png^[makealpha:255,255,255))^[makealpha:0,0,0", "("..terrain(84).."^(greenstone_t_junction.png^[makealpha:255,255,255))^[makealpha:0,0,0", terrain(84)})
 add.nodebox("minecraft:greenstone", { type = "fixed", fixed = { {-0.5, -0.5, -0.5, 0.5, -0.38, 0.5} } })
 add.drawtype("minecraft:greenstone", "raillike")
 add.invimage("minecraft:greenstone", item(40) .."^[colorize:green:128^[contrast:64")
