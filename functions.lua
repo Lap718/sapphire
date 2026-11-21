@@ -188,8 +188,13 @@ core.register_abm({
 			velocity = {
 				x = 0, y = -5 * math.random(2, 15) / 100, z = 0
 			},
-			expirationtime = 8 * math.random(0.3, 1),
+			expirationtime = 10,
 			size = 3.0 * math.random(0.8, 1),
+			jitter = {
+				min = vector.new(-1, 0, -1),
+				max = vector.new(1, 0, 1),
+				bias = 0
+			},
 			texture = "("..simple.."^[resize:1x1)^[contrast:0:-64^[overlay:leaf_"..pnum..".png^[makealpha:0,0,0"
 		})
 	end

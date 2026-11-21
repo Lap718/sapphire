@@ -16,7 +16,7 @@ core.register_biome({
 core.register_decoration({
 	deco_type = "schematic",
 	place_on = "minecraft:path",
-	schematic = "schematics/tower.mts",
+	schematic = path.."/schematics/tower.mts",
 	sidelen = 16,
 	fill_ratio = 0.005,
 	y_min = -14,

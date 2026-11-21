@@ -7,7 +7,7 @@ end
 core.register_decoration({
     deco_type = "schematic",
     place_on = "minecraft:grass",
-    schematic = "schematics/firetree.mts",
+    schematic = path.."/schematics/firetree.mts",
     sidelen = 16,
     fill_ratio = .005,
     y_min = -14,
